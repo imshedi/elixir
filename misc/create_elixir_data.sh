@@ -12,5 +12,4 @@ export LXR_REPO_DIR=/srv/elixir-data/"$PROJ"/repo
 export LXR_DATA_DIR=/srv/elixir-data/"$PROJ"/data
 
 cd ..
-./script.sh list-tags
-./update.py
+./script.sh list-tags && ./update.py
