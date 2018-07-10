@@ -1,23 +1,5 @@
 #!/usr/bin/env python3
 
-#  This file is part of Elixir, a source code cross-referencer.
-#
-#  Copyright (C) 2017  Mikaël Bouillot
-#  <mikael.bouillot@bootlin.com>
-#
-#  Elixir is free software: you can redistribute it and/or modify
-#  it under the terms of the GNU Affero General Public License as published by
-#  the Free Software Foundation, either version 3 of the License, or
-#  (at your option) any later version.
-#
-#  Elixir is distributed in the hope that it will be useful,
-#  but WITHOUT ANY WARRANTY; without even the implied warranty of
-#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#  GNU Affero General Public License for more details.
-#
-#  You should have received a copy of the GNU Affero General Public License
-#  along with Elixir.  If not, see <http://www.gnu.org/licenses/>.
-
 from lib import script, scriptLines
 import lib
 import data
@@ -41,7 +23,11 @@ def query (cmd, *args):
 
     if cmd == 'versions':
         for p in scriptLines ('list-tags', '-h'):
-            if db.vers.exists (p.split(b' ')[2]):
+            res = p.split(b' ')
+            idx = len(res)
+            if len(res) <= 0:
+                idx = 1
+            if db.vers.exists (res[idx - 1]):
                 echo (p + b'\n')
 
     elif cmd == 'latest':

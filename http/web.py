@@ -1,23 +1,5 @@
 #!/usr/bin/python3
 
-#  This file is part of Elixir, a source code cross-referencer.
-#
-#  Copyright (C) 2017  Mikaël Bouillot
-#  <mikael.bouillot@bootlin.com>
-#
-#  Elixir is free software: you can redistribute it and/or modify
-#  it under the terms of the GNU Affero General Public License as published by
-#  the Free Software Foundation, either version 3 of the License, or
-#  (at your option) any later version.
-#
-#  Elixir is distributed in the hope that it will be useful,
-#  but WITHOUT ANY WARRANTY; without even the implied warranty of
-#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#  GNU Affero General Public License for more details.
-#
-#  You should have received a copy of the GNU Affero General Public License
-#  along with Elixir.  If not, see <http://www.gnu.org/licenses/>.
-
 from io import StringIO
 
 realprint = print
@@ -159,18 +141,23 @@ for v1k in va:
     v += '\t<span>'+v1k+'</span>\n'
     v += '\t<ul>\n'
     b += 1
+
     for v2k in v1v:
         v2v = v1v[v2k]
         if v2k == v2v[0] and len(v2v) == 1:
-            if v2k == tag: v += '\t\t<li class="li-link active"><a href="'+v2k+'/'+url+'">'+v2k+'</a></li>\n'
-            else: v += '\t\t<li class="li-link"><a href="'+v2k+'/'+url+'">'+v2k+'</a></li>\n'
+            if v2k == tag:
+                v += '\t\t<li class="li-link active"><a href="'+v2k+'/'+url+'">'+v2k+'</a></li>\n'
+            else:
+                v += '\t\t<li class="li-link"><a href="'+v2k+'/'+url+'">'+v2k+'</a></li>\n'
         else:
             v += '\t\t<li>\n'
             v += '\t\t\t<span>'+v2k+'</span>\n'
             v += '\t\t\t<ul>\n'
             for v3 in v2v:
-                if v3 == tag: v += '\t\t\t\t<li class="li-link active"><a href="'+v3+'/'+url+'">'+v3+'</a></li>\n'
-                else: v += '\t\t\t\t<li class="li-link"><a href="'+v3+'/'+url+'">'+v3+'</a></li>\n'
+                if v3 == tag:
+                    v += '\t\t\t\t<li class="li-link active"><a href="'+v3+'/'+url+'">'+v3+'</a></li>\n'
+                else:
+                    v += '\t\t\t\t<li class="li-link"><a href="'+v3+'/'+url+'">'+v3+'</a></li>\n'
             v += '\t\t\t</ul></li>\n'
     v += '\t</ul></li>\n'
 

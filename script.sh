@@ -49,9 +49,11 @@ list_tags()
 
 list_tags_h()
 {
-    echo "$tags" |
-    tac |
-    sed -r 's/^(v[0-9])\.([0-9]*)(.*)$/\1 \1.\2 \1.\2\3/'
+	if [ "$SCRIPT_URL" = "/agent/latest/source" ]; then
+		echo "$tags" | tac | sed -r 's/^([0-9])\.([0-9]*)(.*)$/\1 \1.\2 \1.\2\3/'
+	else
+		echo "$tags" | tac | sed -r 's/^(v[0-9])\.([0-9]*)(.*)$/\1 \1.\2 \1.\2\3/'
+	fi
 }
 
 get_latest()
@@ -93,7 +95,7 @@ tokenize_file()
         v=`echo $opt1 | version_rev`
         ref="$v:`denormalize $opt2`"
     fi
- 
+
     git cat-file blob $ref 2>/dev/null |
     tr '\n' '\1' |
     perl -pe 's%((/\*.*?\*/|//.*?\001|"(\\.|.)*?"|# *include *<.*?>|\W)+)(\w+)?%\1\n\4\n%g' |
