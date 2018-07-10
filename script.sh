@@ -49,7 +49,7 @@ list_tags()
 
 list_tags_h()
 {
-	if [ "$SCRIPT_URL" = "/agent/latest/source" ]; then
+	if echo "$SCRIPT_URL" | grep -q "agent"; then
 		echo "$tags" | tac | sed -r 's/^([0-9])\.([0-9]*)(.*)$/\1 \1.\2 \1.\2\3/'
 	else
 		echo "$tags" | tac | sed -r 's/^(v[0-9])\.([0-9]*)(.*)$/\1 \1.\2 \1.\2\3/'
@@ -58,7 +58,12 @@ list_tags_h()
 
 get_latest()
 {
-    git tag | version_dir | grep -v '\-rc' | sort -V | tail -n 1
+	if echo "$SCRIPT_URL" | grep -q "agent"; then
+		#git tag | version_dir | grep -v '[A-Za-z]' | sort -V | tail -n 1
+		git tag | version_dir | grep -Eiv 'raptor|vos|vrx|agent|sdk|adk' | sort -V | tail -n 1
+	else
+		git tag | version_dir | grep -v '\-rc' | sort -V | tail -n 1
+	fi
 }
 
 get_type()
